@@ -15,7 +15,7 @@ func TestNewConfig(t *testing.T) {
 	port := "4"
 	dbname := "5"
 	charset := "6"
-	logLevel := logger.Warn
+	logLevel := logger.Info
 
 	t.Run("without option", func(t *testing.T) {
 		got := NewConfig(user, pwd, host, port, dbname, charset, logLevel)
@@ -34,7 +34,7 @@ func TestNewConfig(t *testing.T) {
 			MaxOpenConns:    defaultConfigOption().maxOpenConns,
 			MaxIdleConns:    defaultConfigOption().maxIdleConns,
 			ConnMaxLifetime: defaultConfigOption().connMaxLifetime,
-			LogLevel:       logLevel,
+			LogLevel:        logLevel,
 		}
 
 		if !reflect.DeepEqual(got, want) {
@@ -61,7 +61,7 @@ func TestNewConfig(t *testing.T) {
 			MaxOpenConns:    maxOpenConns,
 			MaxIdleConns:    defaultConfigOption().maxIdleConns,
 			ConnMaxLifetime: defaultConfigOption().connMaxLifetime,
-			LogLevel:       logLevel,
+			LogLevel:        logLevel,
 		}
 
 		if !reflect.DeepEqual(got, want) {
@@ -88,7 +88,7 @@ func TestNewConfig(t *testing.T) {
 			MaxOpenConns:    defaultConfigOption().maxOpenConns,
 			MaxIdleConns:    maxIdleConns,
 			ConnMaxLifetime: defaultConfigOption().connMaxLifetime,
-			LogLevel:       logLevel,
+			LogLevel:        logLevel,
 		}
 
 		if !reflect.DeepEqual(got, want) {
@@ -115,7 +115,7 @@ func TestNewConfig(t *testing.T) {
 			MaxOpenConns:    defaultConfigOption().maxOpenConns,
 			MaxIdleConns:    defaultConfigOption().maxIdleConns,
 			ConnMaxLifetime: connMaxLifetime,
-			LogLevel:       logLevel,
+			LogLevel:        logLevel,
 		}
 
 		if !reflect.DeepEqual(got, want) {
@@ -144,7 +144,7 @@ func TestNewConfig(t *testing.T) {
 			MaxOpenConns:    maxOpenConns,
 			MaxIdleConns:    maxIdleConns,
 			ConnMaxLifetime: connMaxLifetime,
-			LogLevel:       logLevel,
+			LogLevel:        logLevel,
 		}
 
 		if !reflect.DeepEqual(got, want) {
@@ -159,7 +159,7 @@ func TestConfig_GenConnectionString(t *testing.T) {
 		MaxOpenConns    int
 		MaxIdleConns    int
 		ConnMaxLifetime time.Duration
-		LogLevel       logger.LogLevel
+		LogLevel        logger.LogLevel
 	}
 	tests := []struct {
 		name   string
@@ -190,7 +190,7 @@ func TestConfig_GenConnectionString(t *testing.T) {
 				MaxOpenConns:    tt.fields.MaxOpenConns,
 				MaxIdleConns:    tt.fields.MaxIdleConns,
 				ConnMaxLifetime: tt.fields.ConnMaxLifetime,
-				LogLevel:       tt.fields.LogLevel,
+				LogLevel:        tt.fields.LogLevel,
 			}
 			if got := c.GenConnectionString(); got != tt.want {
 				t.Errorf("Config.GenConnectionString() = %v, want %v", got, tt.want)

@@ -11,9 +11,8 @@ import (
 	"log"
 	"time"
 
-	"gorm.io/gorm"
-	// 引用数据库驱动初始化
 	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var container = make(map[string]*gorm.DB)
@@ -47,21 +46,16 @@ func Register(config *Config) {
 
 // RegisterByKey register examples by key
 func RegisterByKey(config *Config, key string) {
-
+	// unregister existed one
 	UnregisterByKey(key)
 
 	connectionString := config.GenConnectionString()
 
-	logLevel := logger.Info
-	if config.EnableLog == false {
-		logLevel = logger.Error
-	}
-
-	logger := logger.New(
+	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		logger.Config{
 			SlowThreshold: time.Second,
-			LogLevel:      logLevel,
+			LogLevel:      config.LogLevel,
 			Colorful:      false,
 		},
 	)
@@ -70,9 +64,8 @@ func RegisterByKey(config *Config, key string) {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
-		Logger: logger,
+		Logger: newLogger,
 	})
-
 	if err != nil {
 		log.Println("connect to database fail, ", connectionString, err)
 		panic(err)
@@ -109,6 +102,11 @@ func UnregisterByKey(key string) {
 		log.Print(err)
 	}
 	delete(container, key)
+}
+
+// SetLogger replace default logger
+func SetLogger(db *gorm.DB, logger logger.Interface) {
+	db.Logger = logger
 }
 
 // MockDB mock default DB
