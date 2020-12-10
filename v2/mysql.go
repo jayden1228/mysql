@@ -52,11 +52,16 @@ func RegisterByKey(config *Config, key string) {
 
 	connectionString := config.GenConnectionString()
 
+	logLevel := logger.Info
+	if config.EnableLog == false {
+		logLevel = logger.Error
+	}
+
 	logger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
 		logger.Config{
 			SlowThreshold: time.Second,
-			LogLevel:      config.LogLevel,
+			LogLevel:      logLevel,
 			Colorful:      false,
 		},
 	)
@@ -137,4 +142,3 @@ func MockDBByKey(key string) (*sql.DB, sqlmock.Sqlmock) {
 	container[key] = gdb
 	return db, mock
 }
-

@@ -3,8 +3,6 @@ package mysql
 import (
 	"fmt"
 	"time"
-
-	"gorm.io/gorm/logger"
 )
 
 // Config examples configuration
@@ -17,8 +15,8 @@ type Config struct {
 	MaxIdleConns int
 	// the maximum amount of time a connection may be reused in second
 	ConnMaxLifetime time.Duration
-	// log level
-	LogLevel logger.LogLevel
+	// log sql
+	EnableLog bool
 }
 
 // ConnectionConfig connection string configuration
@@ -34,7 +32,7 @@ type ConnectionConfig struct {
 }
 
 // NewConfig new config with default value
-func NewConfig(user, pwd, host, port, dbname, charset string, logLevel logger.LogLevel, opts ...ConfigOption) *Config {
+func NewConfig(user, pwd, host, port, dbname, charset string, enableLog EnableLog, opts ...ConfigOption) *Config {
 	option := decodeConfigOpts(opts)
 	return &Config{
 		Connection: &ConnectionConfig{
@@ -50,7 +48,7 @@ func NewConfig(user, pwd, host, port, dbname, charset string, logLevel logger.Lo
 		MaxOpenConns:    option.maxOpenConns,
 		MaxIdleConns:    option.maxIdleConns,
 		ConnMaxLifetime: option.connMaxLifetime,
-		LogLevel:       logLevel,
+		EnableLog:       enableLog,
 	}
 }
 
