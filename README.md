@@ -5,7 +5,7 @@
 ## Install
 
 ```shell
-go get gitlab.com/makeblock-go/mysql
+go get github.com/jayden1228/mysql
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ package examples
 import (
 	"fmt"
 
-	"gitlab.com/makeblock-go/mysql"
+	"github.com/jayden1228/mysql"
 )
 
 type Product struct {

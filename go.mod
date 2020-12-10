@@ -1,4 +1,4 @@
-module gitlab.com/makeblock-go/mysql
+module github.com/makeblock-go/mysql
 
 go 1.13
 
