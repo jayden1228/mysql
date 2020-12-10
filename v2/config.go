@@ -32,7 +32,7 @@ type ConnectionConfig struct {
 }
 
 // NewConfig new config with default value
-func NewConfig(user, pwd, host, port, dbname, charset string, enableLog EnableLog, opts ...ConfigOption) *Config {
+func NewConfig(user, pwd, host, port, dbname, charset string, enableLog bool, opts ...ConfigOption) *Config {
 	option := decodeConfigOpts(opts)
 	return &Config{
 		Connection: &ConnectionConfig{
